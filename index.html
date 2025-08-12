@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store - Thời Trang Cao Cấp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slider-item {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        .countdown-timer {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .blog-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body class="font-body bg-white">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- Top bar -->
+            <div class="border-b border-gray-100 py-2 text-sm text-gray-600 text-center">
+                <span>🚚 Miễn phí vận chuyển cho đơn hàng trên 500k | 📞 Hotline: 1900-1234</span>
+            </div>
+            
+            <!-- Main header -->
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-8">
+                    <h1 class="font-display text-2xl font-bold text-gray-900">FASHION</h1>
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="#" onclick="showProductsPage('nam')" class="text-gray-700 hover:text-black font-medium">Nam</a>
+                        <a href="#" onclick="showProductsPage('nu')" class="text-gray-700 hover:text-black font-medium">Nữ</a>
+                        <a href="#" onclick="showProductsPage('tre-em')" class="text-gray-700 hover:text-black font-medium">Trẻ em</a>
+                        <a href="#" onclick="showProductsPage('phu-kien')" class="text-gray-700 hover:text-black font-medium">Phụ kiện</a>
+                        <a href="#" onclick="showProductsPage('sale')" class="text-gray-700 hover:text-black font-medium">Sale</a>
+                    </nav>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative hidden md:block">
+                        <input type="text" placeholder="Tìm kiếm sản phẩm..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-black">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <button class="text-gray-700 hover:text-black relative" title="Yêu thích">
+                        <i class="fas fa-heart text-lg"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
+                    </button>
+                    <button onclick="toggleAuthModal()" class="text-gray-700 hover:text-black" title="Tài khoản">
+                        <i class="fas fa-user text-lg"></i>
+                    </button>
+                    <button onclick="toggleCart()" class="text-gray-700 hover:text-black relative" title="Giỏ hàng">
+                        <i class="fas fa-shopping-bag text-lg"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="homePage">
+        <!-- Hero Banner Slider -->
+        <section class="slider-container h-[400px] md:h-[600px] relative">
+        <div class="slider-track" id="heroSlider">
+            <div class="slider-item bg-gradient-to-r from-pink-100 to-purple-100 flex items-center">
+                <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center h-full max-w-7xl">
+                    <div class="text-center md:text-left">
+                        <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-900 mb-4">Bộ Sưu Tập Mùa Thu</h2>
+                        <p class="text-lg text-gray-600 mb-6">Khám phá những xu hướng thời trang mới nhất với phong cách hiện đại và thanh lịch</p>
+                        <button onclick="showProductsPage()" class="bg-black text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors">
+                            Mua Ngay
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-full max-w-sm h-80 md:h-96 mx-auto bg-gradient-to-br from-pink-200 to-purple-200 rounded-2xl flex items-center justify-center shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                            <i class="fas fa-tshirt text-6xl md:text-8xl text-gray-700"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slider-item bg-gradient-to-r from-blue-100 to-indigo-100 flex items-center">
+                <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center h-full max-w-7xl">
+                    <div class="text-center md:text-left">
+                        <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-900 mb-4">Thời Trang Nam</h2>
+                        <p class="text-lg text-gray-600 mb-6">Phong cách lịch lãm và hiện đại cho quý ông thành đạt</p>
+                        <button onclick="showProductsPage('nam')" class="bg-black text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors">
+                            Khám Phá
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-full max-w-sm h-80 md:h-96 mx-auto bg-gradient-to-br from-blue-200 to-indigo-200 rounded-2xl flex items-center justify-center shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                            <i class="fas fa-user-tie text-6xl md:text-8xl text-gray-700"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slider controls -->
+        <button onclick="prevSlide()" class="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+            <i class="fas fa-chevron-left text-lg"></i>
+        </button>
+        <button onclick="nextSlide()" class="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+            <i class="fas fa-chevron-right text-lg"></i>
+        </button>
+        
+        <!-- Slider dots -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3">
+            <button onclick="goToSlide(0)" class="w-4 h-4 rounded-full bg-white/70 hover:bg-white transition-all duration-300 slider-dot active shadow-md hover:scale-125"></button>
+            <button onclick="goToSlide(1)" class="w-4 h-4 rounded-full bg-white/70 hover:bg-white transition-all duration-300 slider-dot shadow-md hover:scale-125"></button>
+        </div>
+    </section>
+
+    <!-- Featured Collections -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-4xl font-bold text-gray-900 mb-4">Bộ Sưu Tập Nổi Bật</h2>
+                <p class="text-gray-600 text-lg">Khám phá những xu hướng thời trang mới nhất</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div onclick="showProductsPage('nu')" class="relative group cursor-pointer hover-scale">
+                    <div class="h-80 bg-gradient-to-br from-rose-200 to-pink-300 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-female text-6xl text-gray-700"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors rounded-lg flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <h3 class="font-display text-2xl font-bold mb-2">Thời Trang Nữ</h3>
+                            <p class="text-sm opacity-90 mb-4">Bộ sưu tập mùa thu 2024</p>
+                            <button class="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                                Khám Phá Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showProductsPage('nam')" class="relative group cursor-pointer hover-scale">
+                    <div class="h-80 bg-gradient-to-br from-blue-200 to-indigo-300 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-male text-6xl text-gray-700"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors rounded-lg flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <h3 class="font-display text-2xl font-bold mb-2">Thời Trang Nam</h3>
+                            <p class="text-sm opacity-90 mb-4">Phong cách hiện đại</p>
+                            <button class="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                                Khám Phá Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showProductsPage('tre-em')" class="relative group cursor-pointer hover-scale">
+                    <div class="h-80 bg-gradient-to-br from-yellow-200 to-orange-300 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-child text-6xl text-gray-700"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors rounded-lg flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <h3 class="font-display text-2xl font-bold mb-2">Trẻ Em</h3>
+                            <p class="text-sm opacity-90 mb-4">Dễ thương & thoải mái</p>
+                            <button class="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                                Khám Phá Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Categories -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div onclick="showProductsPage('nam')" class="text-center group cursor-pointer transform hover:scale-105 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-indigo-200 rounded-full flex items-center justify-center group-hover:from-blue-200 group-hover:to-indigo-300 transition-all duration-300 shadow-md group-hover:shadow-lg">
+                        <i class="fas fa-male text-2xl text-gray-700 group-hover:text-blue-700 transition-colors"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">Nam</h3>
+                    <p class="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Phong cách lịch lãm</p>
+                </div>
+                
+                <div onclick="showProductsPage('nu')" class="text-center group cursor-pointer transform hover:scale-105 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-pink-100 to-rose-200 rounded-full flex items-center justify-center group-hover:from-pink-200 group-hover:to-rose-300 transition-all duration-300 shadow-md group-hover:shadow-lg">
+                        <i class="fas fa-female text-2xl text-gray-700 group-hover:text-pink-700 transition-colors"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 group-hover:text-pink-700 transition-colors">Nữ</h3>
+                    <p class="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Thanh lịch quyến rũ</p>
+                </div>
+                
+                <div onclick="showProductsPage('tre-em')" class="text-center group cursor-pointer transform hover:scale-105 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-yellow-100 to-orange-200 rounded-full flex items-center justify-center group-hover:from-yellow-200 group-hover:to-orange-300 transition-all duration-300 shadow-md group-hover:shadow-lg">
+                        <i class="fas fa-child text-2xl text-gray-700 group-hover:text-orange-700 transition-colors"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 group-hover:text-orange-700 transition-colors">Trẻ em</h3>
+                    <p class="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Dễ thương thoải mái</p>
+                </div>
+                
+                <div onclick="showProductsPage('phu-kien')" class="text-center group cursor-pointer transform hover:scale-105 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-pink-200 rounded-full flex items-center justify-center group-hover:from-purple-200 group-hover:to-pink-300 transition-all duration-300 shadow-md group-hover:shadow-lg">
+                        <i class="fas fa-gem text-2xl text-gray-700 group-hover:text-purple-700 transition-colors"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">Phụ kiện</h3>
+                    <p class="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Hoàn thiện phong cách</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Slider -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-display text-3xl font-bold text-gray-900">Sản Phẩm Bán Chạy</h2>
+                <div class="flex space-x-2">
+                    <button onclick="prevProduct()" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg">
+                        <i class="fas fa-chevron-left text-gray-600"></i>
+                    </button>
+                    <button onclick="nextProduct()" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg">
+                        <i class="fas fa-chevron-right text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-hidden">
+                <div class="flex transition-transform duration-300" id="bestSellerSlider">
+                    <div class="min-w-72 mr-6 product-card bg-white rounded-lg shadow-sm p-4 relative group">
+                        <div class="h-64 bg-gradient-to-br from-pink-100 to-rose-200 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-tshirt text-4xl text-gray-600"></i>
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                                <button onclick="quickView('Áo Thun Basic')" class="bg-white text-black px-3 py-2 rounded text-sm hover:bg-gray-100">
+                                    <i class="fas fa-eye mr-1"></i>Xem nhanh
+                                </button>
+                                <button onclick="addToCart('Áo Thun Basic')" class="bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800">
+                                    <i class="fas fa-cart-plus mr-1"></i>Thêm
+                                </button>
+                            </div>
+                            <button onclick="toggleWishlist('Áo Thun Basic')" class="absolute top-2 right-2 w-8 h-8 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                            </button>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Áo Thun Basic</h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-red-500 font-bold">299,000đ</span>
+                                <span class="text-gray-400 line-through ml-2">399,000đ</span>
+                            </div>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="min-w-72 mr-6 product-card bg-white rounded-lg shadow-sm p-4 relative group">
+                        <div class="h-64 bg-gradient-to-br from-blue-100 to-indigo-200 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-user-tie text-4xl text-gray-600"></i>
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                                <button onclick="quickView('Áo Sơ Mi Nam')" class="bg-white text-black px-3 py-2 rounded text-sm hover:bg-gray-100">
+                                    <i class="fas fa-eye mr-1"></i>Xem nhanh
+                                </button>
+                                <button onclick="addToCart('Áo Sơ Mi Nam')" class="bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800">
+                                    <i class="fas fa-cart-plus mr-1"></i>Thêm
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Áo Sơ Mi Nam</h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-red-500 font-bold">599,000đ</span>
+                                <span class="text-gray-400 line-through ml-2">799,000đ</span>
+                            </div>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="far fa-star text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="min-w-72 mr-6 product-card bg-white rounded-lg shadow-sm p-4 relative group">
+                        <div class="h-64 bg-gradient-to-br from-purple-100 to-pink-200 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-female text-4xl text-gray-600"></i>
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                                <button onclick="quickView('Váy Maxi')" class="bg-white text-black px-3 py-2 rounded text-sm hover:bg-gray-100">
+                                    <i class="fas fa-eye mr-1"></i>Xem nhanh
+                                </button>
+                                <button onclick="addToCart('Váy Maxi')" class="bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800">
+                                    <i class="fas fa-cart-plus mr-1"></i>Thêm
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Váy Maxi</h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-red-500 font-bold">899,000đ</span>
+                                <span class="text-gray-400 line-through ml-2">1,299,000đ</span>
+                            </div>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="min-w-72 mr-6 product-card bg-white rounded-lg shadow-sm p-4 relative group">
+                        <div class="h-64 bg-gradient-to-br from-green-100 to-emerald-200 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-child text-4xl text-gray-600"></i>
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                                <button onclick="quickView('Bộ Đồ Trẻ Em')" class="bg-white text-black px-3 py-2 rounded text-sm hover:bg-gray-100">
+                                    <i class="fas fa-eye mr-1"></i>Xem nhanh
+                                </button>
+                                <button onclick="addToCart('Bộ Đồ Trẻ Em')" class="bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800">
+                                    <i class="fas fa-cart-plus mr-1"></i>Thêm
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Bộ Đồ Trẻ Em</h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-red-500 font-bold">199,000đ</span>
+                                <span class="text-gray-400 line-through ml-2">299,000đ</span>
+                            </div>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="far fa-star text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Products Grid -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-3xl font-bold text-gray-900 mb-4">Sản Phẩm Mới</h2>
+                <p class="text-gray-600">Cập nhật những xu hướng thời trang mới nhất</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-rose-100 to-pink-200 flex items-center justify-center relative">
+                        <i class="fas fa-tshirt text-3xl text-gray-600"></i>
+                        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">NEW</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Áo Crop Top</h3>
+                        <p class="text-red-500 font-bold">399,000đ</p>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center relative">
+                        <i class="fas fa-user-tie text-3xl text-gray-600"></i>
+                        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">NEW</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Blazer Nam</h3>
+                        <p class="text-red-500 font-bold">1,299,000đ</p>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-purple-100 to-pink-200 flex items-center justify-center relative">
+                        <i class="fas fa-female text-3xl text-gray-600"></i>
+                        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">NEW</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Chân Váy</h3>
+                        <p class="text-red-500 font-bold">599,000đ</p>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-yellow-100 to-orange-200 flex items-center justify-center relative">
+                        <i class="fas fa-gem text-3xl text-gray-600"></i>
+                        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">NEW</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Túi Xách</h3>
+                        <p class="text-red-500 font-bold">799,000đ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sale Banner & Countdown -->
+    <section class="py-16 bg-gradient-to-r from-red-500 to-pink-500 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="font-display text-4xl font-bold mb-4">🔥 FLASH SALE 50% 🔥</h2>
+            <p class="text-xl mb-8">Giảm giá sốc cho tất cả sản phẩm - Chỉ trong thời gian có hạn!</p>
+            
+            <div class="flex justify-center items-center space-x-4 mb-8">
+                <div class="countdown-timer text-center p-4 rounded-lg">
+                    <div class="text-2xl font-bold" id="days">02</div>
+                    <div class="text-sm">Ngày</div>
+                </div>
+                <div class="countdown-timer text-center p-4 rounded-lg">
+                    <div class="text-2xl font-bold" id="hours">14</div>
+                    <div class="text-sm">Giờ</div>
+                </div>
+                <div class="countdown-timer text-center p-4 rounded-lg">
+                    <div class="text-2xl font-bold" id="minutes">35</div>
+                    <div class="text-sm">Phút</div>
+                </div>
+                <div class="countdown-timer text-center p-4 rounded-lg">
+                    <div class="text-2xl font-bold" id="seconds">42</div>
+                    <div class="text-sm">Giây</div>
+                </div>
+            </div>
+            
+            <button class="bg-white text-red-500 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors">
+                Mua Ngay - Tiết Kiệm 50%
+            </button>
+        </div>
+    </section>
+
+    <!-- Fashion Blog -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-3xl font-bold text-gray-900 mb-4">Blog Thời Trang</h2>
+                <p class="text-gray-600">Cập nhật xu hướng và mẹo phối đồ mới nhất</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <article class="blog-card bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-pink-200 to-rose-300 flex items-center justify-center">
+                        <i class="fas fa-camera text-4xl text-gray-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900 mb-2">Xu Hướng Thời Trang Mùa Thu 2024</h3>
+                        <p class="text-gray-600 text-sm mb-4">Khám phá những xu hướng thời trang hot nhất mùa thu này với những gam màu ấm áp và phong cách vintage...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span>15 Tháng 10, 2024</span>
+                            <a href="#" class="text-black hover:underline">Đọc thêm</a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-card bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-blue-200 to-indigo-300 flex items-center justify-center">
+                        <i class="fas fa-palette text-4xl text-gray-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900 mb-2">Cách Phối Đồ Công Sở Chuyên Nghiệp</h3>
+                        <p class="text-gray-600 text-sm mb-4">Hướng dẫn chi tiết cách phối đồ công sở vừa chuyên nghiệp vừa thời trang cho các cô nàng hiện đại...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span>12 Tháng 10, 2024</span>
+                            <a href="#" class="text-black hover:underline">Đọc thêm</a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-card bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-green-200 to-emerald-300 flex items-center justify-center">
+                        <i class="fas fa-leaf text-4xl text-gray-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900 mb-2">Thời Trang Bền Vững - Xu Hướng Tương Lai</h3>
+                        <p class="text-gray-600 text-sm mb-4">Tìm hiểu về thời trang bền vững và cách lựa chọn trang phục thân thiện với môi trường...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span>08 Tháng 10, 2024</span>
+                            <a href="#" class="text-black hover:underline">Đọc thêm</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Feed -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-3xl font-bold text-gray-900 mb-4">
+                    <i class="fab fa-instagram text-pink-500 mr-2"></i>
+                    #FashionStyle
+                </h2>
+                <p class="text-gray-600">Khách hàng của chúng tôi đang diện gì?</p>
+            </div>
+            
+            <div class="instagram-grid">
+                <div class="aspect-square bg-gradient-to-br from-pink-200 to-rose-300 rounded-lg flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+                    <i class="fas fa-heart text-3xl text-gray-600"></i>
+                </div>
+                <div class="aspect-square bg-gradient-to-br from-blue-200 to-indigo-300 rounded-lg flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+                    <i class="fas fa-star text-3xl text-gray-600"></i>
+                </div>
+                <div class="aspect-square bg-gradient-to-br from-purple-200 to-pink-300 rounded-lg flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+                    <i class="fas fa-thumbs-up text-3xl text-gray-600"></i>
+                </div>
+                <div class="aspect-square bg-gradient-to-br from-yellow-200 to-orange-300 rounded-lg flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+                    <i class="fas fa-smile text-3xl text-gray-600"></i>
+                </div>
+                <div class="aspect-square bg-gradient-to-br from-green-200 to-emerald-300 rounded-lg flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+                    <i class="fas fa-fire text-3xl text-gray-600"></i>
+                </div>
+                <div class="aspect-square bg-gradient-to-br from-indigo-200 to-purple-300 rounded-lg flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+                    <i class="fas fa-gem text-3xl text-gray-600"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+
+    <!-- Products Page -->
+    <div id="productsPage" class="hidden">
+        <!-- Products Header -->
+        <section class="bg-gray-100 py-8">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <button onclick="showHomePage()" class="text-gray-600 hover:text-black mb-2">
+                            <i class="fas fa-arrow-left mr-2"></i>Quay lại trang chủ
+                        </button>
+                        <h1 class="font-display text-3xl font-bold text-gray-900" id="productsTitle">Tất Cả Sản Phẩm</h1>
+                        <p class="text-gray-600" id="productsSubtitle">Khám phá bộ sưu tập thời trang đa dạng</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <select onchange="sortProducts(this.value)" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black">
+                            <option value="">Sắp xếp theo</option>
+                            <option value="price-asc">Giá: Thấp đến cao</option>
+                            <option value="price-desc">Giá: Cao đến thấp</option>
+                            <option value="newest">Mới nhất</option>
+                            <option value="bestseller">Bán chạy nhất</option>
+                            <option value="rating">Đánh giá cao nhất</option>
+                        </select>
+                        <div class="flex border border-gray-300 rounded-lg">
+                            <button onclick="setViewMode('grid')" class="px-3 py-2 hover:bg-gray-100" id="gridView">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button onclick="setViewMode('list')" class="px-3 py-2 hover:bg-gray-100" id="listView">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters and Products -->
+        <section class="py-8">
+            <div class="container mx-auto px-4">
+                <div class="grid lg:grid-cols-4 gap-8">
+                    <!-- Filters Sidebar -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-lg shadow-sm p-6 sticky top-24">
+                            <h3 class="font-semibold text-gray-900 mb-4">Bộ Lọc</h3>
+                            
+                            <!-- Category Filter -->
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-3">Danh Mục</h4>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="mr-2" onchange="filterProducts()">
+                                        <span class="text-sm">Thời trang nam</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="mr-2" onchange="filterProducts()">
+                                        <span class="text-sm">Thời trang nữ</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="mr-2" onchange="filterProducts()">
+                                        <span class="text-sm">Trẻ em</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="mr-2" onchange="filterProducts()">
+                                        <span class="text-sm">Phụ kiện</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Price Filter -->
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-3">Khoảng Giá</h4>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="price" class="mr-2" onchange="filterProducts()">
+                                        <span class="text-sm">Dưới 500,000đ</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="price" class="mr-2" onchange="filterProducts()">
+                                        <span class="text-sm">500,000đ - 1,000,000đ</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="price" class="mr-2" onchange="filterProducts()">
+                                        <span class="text-sm">Trên 1,000,000đ</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Size Filter -->
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-3">Kích Thước</h4>
+                                <div class="flex flex-wrap gap-2" id="sizeFilters">
+                                    <button onclick="toggleSizeFilter('S')" class="size-filter px-3 py-1 border border-gray-300 rounded text-sm hover:border-black hover:bg-black hover:text-white transition-colors" data-size="S">S</button>
+                                    <button onclick="toggleSizeFilter('M')" class="size-filter px-3 py-1 border border-gray-300 rounded text-sm hover:border-black hover:bg-black hover:text-white transition-colors" data-size="M">M</button>
+                                    <button onclick="toggleSizeFilter('L')" class="size-filter px-3 py-1 border border-gray-300 rounded text-sm hover:border-black hover:bg-black hover:text-white transition-colors" data-size="L">L</button>
+                                    <button onclick="toggleSizeFilter('XL')" class="size-filter px-3 py-1 border border-gray-300 rounded text-sm hover:border-black hover:bg-black hover:text-white transition-colors" data-size="XL">XL</button>
+                                </div>
+                            </div>
+
+                            <!-- Color Filter -->
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-3">Màu Sắc</h4>
+                                <div class="flex flex-wrap gap-2" id="colorFilters">
+                                    <button onclick="toggleColorFilter('red')" class="color-filter w-8 h-8 bg-red-500 rounded-full border-2 border-gray-300 hover:border-black transition-colors" data-color="red" title="Đỏ"></button>
+                                    <button onclick="toggleColorFilter('blue')" class="color-filter w-8 h-8 bg-blue-500 rounded-full border-2 border-gray-300 hover:border-black transition-colors" data-color="blue" title="Xanh dương"></button>
+                                    <button onclick="toggleColorFilter('green')" class="color-filter w-8 h-8 bg-green-500 rounded-full border-2 border-gray-300 hover:border-black transition-colors" data-color="green" title="Xanh lá"></button>
+                                    <button onclick="toggleColorFilter('yellow')" class="color-filter w-8 h-8 bg-yellow-500 rounded-full border-2 border-gray-300 hover:border-black transition-colors" data-color="yellow" title="Vàng"></button>
+                                    <button onclick="toggleColorFilter('black')" class="color-filter w-8 h-8 bg-black rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors" data-color="black" title="Đen"></button>
+                                    <button onclick="toggleColorFilter('white')" class="color-filter w-8 h-8 bg-white rounded-full border-2 border-gray-300 hover:border-black transition-colors" data-color="white" title="Trắng"></button>
+                                    <button onclick="toggleColorFilter('pink')" class="color-filter w-8 h-8 bg-pink-500 rounded-full border-2 border-gray-300 hover:border-black transition-colors" data-color="pink" title="Hồng"></button>
+                                    <button onclick="toggleColorFilter('brown')" class="color-filter w-8 h-8 bg-amber-700 rounded-full border-2 border-gray-300 hover:border-black transition-colors" data-color="brown" title="Nâu"></button>
+                                </div>
+                            </div>
+
+                            <button onclick="clearFilters()" class="w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200">
+                                Xóa Bộ Lọc
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="lg:col-span-3">
+                        <div class="mb-4 flex items-center justify-between">
+                            <p class="text-gray-600" id="productsCount">Hiển thị 24 sản phẩm</p>
+                        </div>
+                        
+                        <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                            <!-- Product items will be generated by JavaScript -->
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="flex justify-center mt-12">
+                            <div class="flex space-x-2">
+                                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="px-4 py-2 bg-black text-white rounded-lg">1</button>
+                                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">2</button>
+                                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">3</button>
+                                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-display text-2xl font-bold mb-4">FASHION</h3>
+                    <p class="text-gray-400 mb-4">Thời trang cao cấp cho mọi phong cách sống. Chất lượng tuyệt vời, giá cả hợp lý.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-tiktok text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Liên Hệ</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p><i class="fas fa-map-marker-alt mr-2"></i>123 Đường ABC, Quận 1, TP.HCM</p>
+                        <p><i class="fas fa-phone mr-2"></i>1900-1234</p>
+                        <p><i class="fas fa-envelope mr-2"></i>info@fashion.com</p>
+                        <p><i class="fas fa-clock mr-2"></i>8:00 - 22:00 (Thứ 2 - CN)</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Chính Sách</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-gray-400 hover:text-white">Chính sách đổi trả</a>
+                        <a href="#" class="block text-gray-400 hover:text-white">Chính sách bảo mật</a>
+                        <a href="#" class="block text-gray-400 hover:text-white">Điều khoản sử dụng</a>
+                        <a href="#" class="block text-gray-400 hover:text-white">Hướng dẫn mua hàng</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Đăng Ký Nhận Tin</h4>
+                    <p class="text-gray-400 mb-4">Nhận thông tin về sản phẩm mới và ưu đãi đặc biệt</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Email của bạn" class="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-white">
+                        <button class="bg-white text-gray-900 px-6 py-2 rounded-r-lg font-semibold hover:bg-gray-100">
+                            Đăng Ký
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Fashion Store. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex flex-col h-full">
+            <!-- Cart Header -->
+            <div class="flex items-center justify-between p-6 border-b">
+                <h2 class="font-display text-xl font-bold">Giỏ Hàng</h2>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Cart Items -->
+            <div class="flex-1 overflow-y-auto p-6" id="cartItems">
+                <div class="text-center text-gray-500 py-12">
+                    <i class="fas fa-shopping-bag text-4xl mb-4"></i>
+                    <p>Giỏ hàng của bạn đang trống</p>
+                </div>
+            </div>
+            
+            <!-- Cart Footer -->
+            <div class="border-t p-6" id="cartFooter" style="display: none;">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-semibold">Tổng cộng:</span>
+                    <span class="font-bold text-xl text-red-500" id="cartTotal">0đ</span>
+                </div>
+                <button class="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 mb-3">
+                    Thanh Toán
+                </button>
+                <button onclick="toggleCart()" class="w-full border border-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-50">
+                    Tiếp Tục Mua Sắm
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cart Overlay -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="toggleCart()"></div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-display text-2xl font-bold" id="authTitle">Đăng Nhập</h2>
+                    <button onclick="closeAuthModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <form onsubmit="handleLogin(event)">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black" placeholder="Nhập email của bạn">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Mật khẩu</label>
+                            <div class="relative">
+                                <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black pr-12" placeholder="Nhập mật khẩu">
+                                <button type="button" onclick="togglePassword(this)" class="absolute right-3 top-3 text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mb-6">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2">
+                                <span class="text-sm text-gray-600">Ghi nhớ đăng nhập</span>
+                            </label>
+                            <a href="#" class="text-sm text-black hover:underline">Quên mật khẩu?</a>
+                        </div>
+                        <button type="submit" class="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 mb-4">
+                            Đăng Nhập
+                        </button>
+                    </form>
+                    
+                    <div class="text-center mb-4">
+                        <span class="text-gray-500">hoặc</span>
+                    </div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <button class="w-full flex items-center justify-center py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            <i class="fab fa-google text-red-500 mr-2"></i>
+                            Đăng nhập với Google
+                        </button>
+                        <button class="w-full flex items-center justify-center py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            <i class="fab fa-facebook text-blue-600 mr-2"></i>
+                            Đăng nhập với Facebook
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <span class="text-gray-600">Chưa có tài khoản? </span>
+                        <button onclick="switchToRegister()" class="text-black font-semibold hover:underline">Đăng ký ngay</button>
+                    </div>
+                </div>
+                
+                <!-- Register Form -->
+                <div id="registerForm" class="hidden">
+                    <form onsubmit="handleRegister(event)">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Họ và tên</label>
+                            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black" placeholder="Nhập họ và tên">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black" placeholder="Nhập email của bạn">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Số điện thoại</label>
+                            <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black" placeholder="Nhập số điện thoại">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Mật khẩu</label>
+                            <div class="relative">
+                                <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black pr-12" placeholder="Nhập mật khẩu">
+                                <button type="button" onclick="togglePassword(this)" class="absolute right-3 top-3 text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Xác nhận mật khẩu</label>
+                            <div class="relative">
+                                <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black pr-12" placeholder="Nhập lại mật khẩu">
+                                <button type="button" onclick="togglePassword(this)" class="absolute right-3 top-3 text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="flex items-start">
+                                <input type="checkbox" required class="mr-2 mt-1">
+                                <span class="text-sm text-gray-600">Tôi đồng ý với <a href="#" class="text-black hover:underline">Điều khoản sử dụng</a> và <a href="#" class="text-black hover:underline">Chính sách bảo mật</a></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 mb-4">
+                            Đăng Ký
+                        </button>
+                    </form>
+                    
+                    <div class="text-center mb-4">
+                        <span class="text-gray-500">hoặc</span>
+                    </div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <button class="w-full flex items-center justify-center py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            <i class="fab fa-google text-red-500 mr-2"></i>
+                            Đăng ký với Google
+                        </button>
+                        <button class="w-full flex items-center justify-center py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            <i class="fab fa-facebook text-blue-600 mr-2"></i>
+                            Đăng ký với Facebook
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <span class="text-gray-600">Đã có tài khoản? </span>
+                        <button onclick="switchToLogin()" class="text-black font-semibold hover:underline">Đăng nhập ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-display text-2xl font-bold" id="modalProductName">Tên Sản Phẩm</h2>
+                    <button onclick="closeQuickView()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="h-96 bg-gradient-to-br from-pink-100 to-rose-200 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-tshirt text-6xl text-gray-600" id="modalProductIcon"></i>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="h-20 bg-gradient-to-br from-pink-100 to-rose-200 rounded flex items-center justify-center cursor-pointer border-2 border-black">
+                                <i class="fas fa-tshirt text-lg text-gray-600"></i>
+                            </div>
+                            <div class="h-20 bg-gradient-to-br from-pink-200 to-rose-300 rounded flex items-center justify-center cursor-pointer">
+                                <i class="fas fa-tshirt text-lg text-gray-600"></i>
+                            </div>
+                            <div class="h-20 bg-gradient-to-br from-rose-200 to-pink-300 rounded flex items-center justify-center cursor-pointer">
+                                <i class="fas fa-tshirt text-lg text-gray-600"></i>
+                            </div>
+                            <div class="h-20 bg-gradient-to-br from-rose-100 to-pink-200 rounded flex items-center justify-center cursor-pointer">
+                                <i class="fas fa-tshirt text-lg text-gray-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="mb-4">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm">(124 đánh giá)</span>
+                            </div>
+                            <div class="flex items-center space-x-3 mb-4">
+                                <span class="text-3xl font-bold text-red-500" id="modalProductPrice">299,000đ</span>
+                                <span class="text-xl text-gray-400 line-through" id="modalProductOldPrice">399,000đ</span>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-sm">-25%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2">Màu sắc:</h4>
+                            <div class="flex space-x-2">
+                                <button class="w-8 h-8 bg-red-500 rounded-full border-2 border-gray-300 hover:border-black"></button>
+                                <button class="w-8 h-8 bg-blue-500 rounded-full border-2 border-gray-300 hover:border-black"></button>
+                                <button class="w-8 h-8 bg-green-500 rounded-full border-2 border-gray-300 hover:border-black"></button>
+                                <button class="w-8 h-8 bg-black rounded-full border-2 border-gray-300 hover:border-gray-500"></button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2">Kích thước:</h4>
+                            <div class="flex space-x-2">
+                                <button class="px-4 py-2 border border-gray-300 rounded hover:border-black hover:bg-black hover:text-white">S</button>
+                                <button class="px-4 py-2 border border-gray-300 rounded hover:border-black hover:bg-black hover:text-white">M</button>
+                                <button class="px-4 py-2 border border-gray-300 rounded hover:border-black hover:bg-black hover:text-white">L</button>
+                                <button class="px-4 py-2 border border-gray-300 rounded hover:border-black hover:bg-black hover:text-white">XL</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2">Số lượng:</h4>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="decreaseQuantity()" class="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="text-lg font-semibold" id="quantity">1</span>
+                                <button onclick="increaseQuantity()" class="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4 mb-6">
+                            <button onclick="addToCartFromModal()" class="flex-1 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800">
+                                <i class="fas fa-cart-plus mr-2"></i>Thêm vào giỏ
+                            </button>
+                            <button class="flex-1 bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600">
+                                Mua ngay
+                            </button>
+                        </div>
+                        
+                        <div class="border-t pt-4">
+                            <h4 class="font-semibold mb-2">Mô tả sản phẩm:</h4>
+                            <p class="text-gray-600 text-sm">
+                                Sản phẩm được làm từ chất liệu cao cấp, thiết kế hiện đại và phù hợp với nhiều phong cách khác nhau. 
+                                Dễ dàng phối đồ và thoải mái khi mặc.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hero Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-item');
+        const dots = document.querySelectorAll('.slider-dot');
+        
+        function showSlide(index) {
+            const slider = document.getElementById('heroSlider');
+            slider.style.transform = `translateX(-${index * 100}%)`;
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                dot.style.backgroundColor = i === index ? 'white' : 'rgba(255,255,255,0.6)';
+            });
+            
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function goToSlide(index) {
+            showSlide(index);
+        }
+        
+        // Auto slide
+        setInterval(nextSlide, 5000);
+        
+        // Best Seller Slider
+        let productSlideIndex = 0;
+        
+        function nextProduct() {
+            const slider = document.getElementById('bestSellerSlider');
+            const maxSlide = slider.children.length - 4;
+            if (productSlideIndex < maxSlide) {
+                productSlideIndex++;
+                slider.style.transform = `translateX(-${productSlideIndex * 288}px)`;
+            }
+        }
+        
+        function prevProduct() {
+            const slider = document.getElementById('bestSellerSlider');
+            if (productSlideIndex > 0) {
+                productSlideIndex--;
+                slider.style.transform = `translateX(-${productSlideIndex * 288}px)`;
+            }
+        }
+        
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const endTime = now + (2 * 24 * 60 * 60 * 1000) + (14 * 60 * 60 * 1000) + (35 * 60 * 1000) + (42 * 1000);
+            
+            const distance = endTime - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Quick View Modal
+        let currentQuantity = 1;
+        
+        function quickView(productName) {
+            document.getElementById('modalProductName').textContent = productName;
+            document.getElementById('quickViewModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Set product-specific data
+            const productData = {
+                'Áo Thun Basic': {
+                    price: '299,000đ',
+                    oldPrice: '399,000đ',
+                    icon: 'fas fa-tshirt'
+                },
+                'Áo Sơ Mi Nam': {
+                    price: '599,000đ',
+                    oldPrice: '799,000đ',
+                    icon: 'fas fa-user-tie'
+                },
+                'Váy Maxi': {
+                    price: '899,000đ',
+                    oldPrice: '1,299,000đ',
+                    icon: 'fas fa-female'
+                },
+                'Bộ Đồ Trẻ Em': {
+                    price: '199,000đ',
+                    oldPrice: '299,000đ',
+                    icon: 'fas fa-child'
+                }
+            };
+            
+            if (productData[productName]) {
+                document.getElementById('modalProductPrice').textContent = productData[productName].price;
+                document.getElementById('modalProductOldPrice').textContent = productData[productName].oldPrice;
+                document.getElementById('modalProductIcon').className = productData[productName].icon + ' text-6xl text-gray-600';
+            }
+        }
+        
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            currentQuantity = 1;
+            document.getElementById('quantity').textContent = '1';
+        }
+        
+        function increaseQuantity() {
+            currentQuantity++;
+            document.getElementById('quantity').textContent = currentQuantity;
+        }
+        
+        function decreaseQuantity() {
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                document.getElementById('quantity').textContent = currentQuantity;
+            }
+        }
+        
+        function addToCartFromModal() {
+            const productName = document.getElementById('modalProductName').textContent;
+            addToCart(productName);
+            closeQuickView();
+        }
+        
+        // Shopping Cart functionality
+        let cartItems = [];
+        let cartTotal = 0;
+        
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            
+            if (sidebar.style.transform === 'translateX(0px)') {
+                sidebar.style.transform = 'translateX(100%)';
+                overlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            } else {
+                sidebar.style.transform = 'translateX(0px)';
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function addToCart(productName) {
+            const productPrices = {
+                'Áo Thun Basic': 299000,
+                'Áo Sơ Mi Nam': 599000,
+                'Váy Maxi': 899000,
+                'Bộ Đồ Trẻ Em': 199000,
+                'Áo Crop Top': 399000,
+                'Blazer Nam': 1299000,
+                'Chân Váy': 599000,
+                'Túi Xách': 799000
+            };
+            
+            const price = productPrices[productName] || 299000;
+            
+            // Check if item already exists in cart
+            const existingItem = cartItems.find(item => item.name === productName);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartItems.push({
+                    name: productName,
+                    price: price,
+                    quantity: 1,
+                    id: Date.now()
+                });
+            }
+            
+            updateCartDisplay();
+            
+            // Show success message
+            showNotification(`Đã thêm "${productName}" vào giỏ hàng!`);
+            
+            // Add animation effect
+            const cartIcon = document.querySelector('.fa-shopping-bag');
+            cartIcon.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+            }, 200);
+        }
+        
+        function removeFromCart(itemId) {
+            cartItems = cartItems.filter(item => item.id !== itemId);
+            updateCartDisplay();
+            showNotification('Đã xóa sản phẩm khỏi giỏ hàng');
+        }
+        
+        function updateQuantity(itemId, change) {
+            const item = cartItems.find(item => item.id === itemId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(itemId);
+                } else {
+                    updateCartDisplay();
+                }
+            }
+        }
+        
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartFooter = document.getElementById('cartFooter');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            // Update cart count
+            const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Calculate total
+            cartTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center text-gray-500 py-12">
+                        <i class="fas fa-shopping-bag text-4xl mb-4"></i>
+                        <p>Giỏ hàng của bạn đang trống</p>
+                    </div>
+                `;
+                cartFooter.style.display = 'none';
+            } else {
+                cartItemsContainer.innerHTML = cartItems.map(item => `
+                    <div class="flex items-center space-x-4 py-4 border-b">
+                        <div class="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-200 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tshirt text-gray-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-sm">${item.name}</h3>
+                            <p class="text-red-500 font-bold">${formatPrice(item.price)}</p>
+                            <div class="flex items-center space-x-2 mt-2">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 border rounded flex items-center justify-center text-xs hover:bg-gray-100">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="text-sm font-semibold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 border rounded flex items-center justify-center text-xs hover:bg-gray-100">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">
+                            <i class="fas fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                `).join('');
+                
+                cartFooter.style.display = 'block';
+                cartTotalElement.textContent = formatPrice(cartTotal);
+            }
+        }
+        
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price).replace('₫', 'đ');
+        }
+        
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Size selection
+        document.querySelectorAll('#quickViewModal button').forEach(button => {
+            if (button.textContent.match(/^[SMLX]+$/)) {
+                button.addEventListener('click', function() {
+                    // Remove active class from all size buttons
+                    this.parentNode.querySelectorAll('button').forEach(btn => {
+                        btn.classList.remove('bg-black', 'text-white');
+                        btn.classList.add('border-gray-300');
+                    });
+                    // Add active class to clicked button
+                    this.classList.add('bg-black', 'text-white');
+                    this.classList.remove('border-gray-300');
+                });
+            }
+        });
+        
+        // Color selection
+        document.querySelectorAll('#quickViewModal .w-8.h-8').forEach(colorBtn => {
+            colorBtn.addEventListener('click', function() {
+                // Remove active border from all color buttons
+                this.parentNode.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('border-black');
+                    btn.classList.add('border-gray-300');
+                });
+                // Add active border to clicked button
+                this.classList.add('border-black');
+                this.classList.remove('border-gray-300');
+            });
+        });
+        
+        // Newsletter subscription
+        document.querySelector('footer button').addEventListener('click', function() {
+            const email = this.previousElementSibling.value;
+            if (email) {
+                alert(`Cảm ơn bạn đã đăng ký nhận tin với email: ${email}`);
+                this.previousElementSibling.value = '';
+            } else {
+                alert('Vui lòng nhập email của bạn!');
+            }
+        });
+        
+        // Search functionality
+        document.querySelector('input[placeholder="Tìm kiếm sản phẩm..."]').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value;
+                if (searchTerm) {
+                    alert(`Đang tìm kiếm: "${searchTerm}"`);
+                }
+            }
+        });
+        
+        // Mobile menu toggle
+        document.querySelector('.fa-bars').parentElement.addEventListener('click', function() {
+            alert('Menu mobile sẽ được hiển thị ở đây');
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('quickViewModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeQuickView();
+            }
+        });
+        
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('quickViewModal').classList.contains('hidden')) {
+                closeQuickView();
+            }
+        });
+        
+        // Wishlist functionality
+        let wishlistItems = [];
+        
+        function toggleWishlist(productName) {
+            const heartIcon = event.target;
+            const isInWishlist = wishlistItems.includes(productName);
+            
+            if (isInWishlist) {
+                // Remove from wishlist
+                wishlistItems = wishlistItems.filter(item => item !== productName);
+                heartIcon.classList.remove('fas', 'text-red-500');
+                heartIcon.classList.add('far', 'text-gray-600');
+                alert(`Đã xóa "${productName}" khỏi danh sách yêu thích`);
+            } else {
+                // Add to wishlist
+                wishlistItems.push(productName);
+                heartIcon.classList.remove('far', 'text-gray-600');
+                heartIcon.classList.add('fas', 'text-red-500');
+                alert(`Đã thêm "${productName}" vào danh sách yêu thích`);
+            }
+            
+            // Update wishlist count
+            const wishlistCount = document.querySelector('.fa-heart + span');
+            wishlistCount.textContent = wishlistItems.length;
+        }
+        
+        // Smooth scroll to top button
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                if (!document.getElementById('scrollToTop')) {
+                    const scrollBtn = document.createElement('button');
+                    scrollBtn.id = 'scrollToTop';
+                    scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+                    scrollBtn.className = 'fixed bottom-6 right-6 w-12 h-12 bg-black text-white rounded-full shadow-lg hover:bg-gray-800 transition-all z-40';
+                    scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+                    document.body.appendChild(scrollBtn);
+                }
+            } else {
+                const scrollBtn = document.getElementById('scrollToTop');
+                if (scrollBtn) {
+                    scrollBtn.remove();
+                }
+            }
+        });
+        
+        // Loading animation for buttons
+        function showLoading(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Đang xử lý...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }, 1500);
+        }
+        
+        // Enhanced add to cart with loading
+        const originalAddToCart = addToCart;
+        window.addToCart = function(productName) {
+            const button = event.target.closest('button');
+            if (button && button.innerHTML.includes('Thêm')) {
+                showLoading(button);
+                setTimeout(() => {
+                    originalAddToCart(productName);
+                }, 1500);
+            } else {
+                originalAddToCart(productName);
+            }
+        };
+        
+        // Authentication Modal Functions
+        function toggleAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            
+            // Reset forms
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('authTitle').textContent = 'Đăng Nhập';
+        }
+        
+        function switchToRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('authTitle').textContent = 'Đăng Ký';
+        }
+        
+        function switchToLogin() {
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('authTitle').textContent = 'Đăng Nhập';
+        }
+        
+        function togglePassword(button) {
+            const input = button.previousElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            const form = event.target;
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('input[type="password"]').value;
+            const rememberMe = form.querySelector('input[type="checkbox"]').checked;
+            
+            // Show loading
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Đang đăng nhập...';
+            submitBtn.disabled = true;
+            
+            // Simulate login process
+            setTimeout(() => {
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Show success message
+                showNotification(`Đăng nhập thành công! Chào mừng bạn trở lại.`);
+                
+                // Update UI to show logged in state
+                updateUserState(email);
+                
+                // Close modal
+                closeAuthModal();
+                
+                // Clear form
+                form.reset();
+            }, 2000);
+        }
+        
+        function handleRegister(event) {
+            event.preventDefault();
+            const form = event.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            const phone = form.querySelector('input[type="tel"]').value;
+            const password = form.querySelectorAll('input[type="password"]')[0].value;
+            const confirmPassword = form.querySelectorAll('input[type="password"]')[1].value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+            
+            // Show loading
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Đang đăng ký...';
+            submitBtn.disabled = true;
+            
+            // Simulate registration process
+            setTimeout(() => {
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Show success message
+                showNotification(`Đăng ký thành công! Chào mừng ${name} đến với Fashion Store.`);
+                
+                // Update UI to show logged in state
+                updateUserState(email, name);
+                
+                // Close modal
+                closeAuthModal();
+                
+                // Clear form
+                form.reset();
+            }, 2000);
+        }
+        
+        function updateUserState(email, name = null) {
+            // Update user icon to show logged in state
+            const userButton = document.querySelector('button[title="Tài khoản"]');
+            const userName = name || email.split('@')[0];
+            
+            userButton.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                        ${userName.charAt(0).toUpperCase()}
+                    </div>
+                    <span class="hidden md:block text-sm font-medium">${userName}</span>
+                </div>
+            `;
+            
+            userButton.title = `Xin chào, ${userName}`;
+            
+            // Change click handler to show user menu instead of auth modal
+            userButton.onclick = showUserMenu;
+        }
+        
+        function showUserMenu() {
+            // Create user dropdown menu
+            const existingMenu = document.getElementById('userMenu');
+            if (existingMenu) {
+                existingMenu.remove();
+                return;
+            }
+            
+            const userButton = document.querySelector('button[title*="Xin chào"]');
+            const menu = document.createElement('div');
+            menu.id = 'userMenu';
+            menu.className = 'absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50';
+            menu.innerHTML = `
+                <div class="py-2">
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-user mr-2"></i>Thông tin cá nhân
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-shopping-bag mr-2"></i>Đơn hàng của tôi
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-heart mr-2"></i>Sản phẩm yêu thích
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-cog mr-2"></i>Cài đặt
+                    </a>
+                    <hr class="my-2">
+                    <button onclick="logout()" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất
+                    </button>
+                </div>
+            `;
+            
+            userButton.parentElement.style.position = 'relative';
+            userButton.parentElement.appendChild(menu);
+            
+            // Close menu when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', function closeMenu(e) {
+                    if (!menu.contains(e.target) && !userButton.contains(e.target)) {
+                        menu.remove();
+                        document.removeEventListener('click', closeMenu);
+                    }
+                });
+            }, 100);
+        }
+        
+        function logout() {
+            // Reset user button
+            const userButton = document.querySelector('button[title*="Xin chào"]');
+            userButton.innerHTML = '<i class="fas fa-user text-lg"></i>';
+            userButton.title = 'Tài khoản';
+            userButton.onclick = toggleAuthModal;
+            
+            // Remove user menu
+            const menu = document.getElementById('userMenu');
+            if (menu) menu.remove();
+            
+            // Show logout message
+            showNotification('Đã đăng xuất thành công!');
+        }
+        
+        // Close auth modal when clicking outside
+        document.getElementById('authModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAuthModal();
+            }
+        });
+        
+        // Keyboard navigation for auth modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('authModal').classList.contains('hidden')) {
+                closeAuthModal();
+            }
+        });
+        
+        // Products Page Functions
+        let allProducts = [
+            { id: 1, name: 'Áo Thun Basic Nam', price: 299000, oldPrice: 399000, category: 'nam', image: 'fas fa-tshirt', colors: ['red', 'blue', 'black'], sizes: ['S', 'M', 'L', 'XL'], rating: 5 },
+            { id: 2, name: 'Áo Sơ Mi Công Sở', price: 599000, oldPrice: 799000, category: 'nam', image: 'fas fa-user-tie', colors: ['white', 'blue', 'black'], sizes: ['M', 'L', 'XL'], rating: 4 },
+            { id: 3, name: 'Quần Jeans Nam', price: 799000, oldPrice: 999000, category: 'nam', image: 'fas fa-male', colors: ['blue', 'black'], sizes: ['S', 'M', 'L', 'XL'], rating: 5 },
+            { id: 4, name: 'Váy Maxi Nữ', price: 899000, oldPrice: 1299000, category: 'nu', image: 'fas fa-female', colors: ['red', 'pink', 'black'], sizes: ['S', 'M', 'L'], rating: 5 },
+            { id: 5, name: 'Áo Blouse Nữ', price: 459000, oldPrice: 599000, category: 'nu', image: 'fas fa-female', colors: ['white', 'pink', 'yellow'], sizes: ['S', 'M', 'L'], rating: 4 },
+            { id: 6, name: 'Chân Váy A', price: 399000, oldPrice: 499000, category: 'nu', image: 'fas fa-female', colors: ['black', 'red', 'blue'], sizes: ['S', 'M', 'L'], rating: 4 },
+            { id: 7, name: 'Bộ Đồ Trẻ Em', price: 199000, oldPrice: 299000, category: 'tre-em', image: 'fas fa-child', colors: ['yellow', 'green', 'blue'], sizes: ['S', 'M'], rating: 5 },
+            { id: 8, name: 'Áo Khoác Trẻ Em', price: 349000, oldPrice: 449000, category: 'tre-em', image: 'fas fa-child', colors: ['red', 'blue', 'green'], sizes: ['S', 'M', 'L'], rating: 4 },
+            { id: 9, name: 'Túi Xách Nữ', price: 799000, oldPrice: 999000, category: 'phu-kien', image: 'fas fa-shopping-bag', colors: ['black', 'brown', 'red'], sizes: ['One Size'], rating: 5 },
+            { id: 10, name: 'Đồng Hồ Nam', price: 1299000, oldPrice: 1599000, category: 'phu-kien', image: 'fas fa-clock', colors: ['black', 'silver'], sizes: ['One Size'], rating: 5 },
+            { id: 11, name: 'Kính Mát', price: 599000, oldPrice: 799000, category: 'phu-kien', image: 'fas fa-glasses', colors: ['black', 'brown'], sizes: ['One Size'], rating: 4 },
+            { id: 12, name: 'Giày Sneaker', price: 999000, oldPrice: 1299000, category: 'phu-kien', image: 'fas fa-shoe-prints', colors: ['white', 'black', 'red'], sizes: ['38', '39', '40', '41', '42'], rating: 5 }
+        ];
+        
+        let currentViewMode = 'grid';
+        let filteredProducts = [...allProducts];
+        
+        function showProductsPage(category = null) {
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('productsPage').classList.remove('hidden');
+            
+            // Update title based on category
+            const titles = {
+                'nam': { title: 'Thời Trang Nam', subtitle: 'Phong cách lịch lãm và hiện đại' },
+                'nu': { title: 'Thời Trang Nữ', subtitle: 'Thanh lịch và quyến rũ' },
+                'tre-em': { title: 'Thời Trang Trẻ Em', subtitle: 'Dễ thương và thoải mái' },
+                'phu-kien': { title: 'Phụ Kiện', subtitle: 'Hoàn thiện phong cách của bạn' },
+                'sale': { title: 'Sản Phẩm Sale', subtitle: 'Giảm giá đặc biệt' }
+            };
+            
+            if (category && titles[category]) {
+                document.getElementById('productsTitle').textContent = titles[category].title;
+                document.getElementById('productsSubtitle').textContent = titles[category].subtitle;
+                
+                // Filter products by category
+                if (category === 'sale') {
+                    filteredProducts = allProducts.filter(product => product.oldPrice > product.price);
+                } else {
+                    filteredProducts = allProducts.filter(product => product.category === category);
+                }
+            } else {
+                document.getElementById('productsTitle').textContent = 'Tất Cả Sản Phẩm';
+                document.getElementById('productsSubtitle').textContent = 'Khám phá bộ sưu tập thời trang đa dạng';
+                filteredProducts = [...allProducts];
+            }
+            
+            renderProducts();
+            window.scrollTo(0, 0);
+        }
+        
+        function showHomePage() {
+            document.getElementById('productsPage').classList.add('hidden');
+            document.getElementById('homePage').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+        
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const count = document.getElementById('productsCount');
+            
+            count.textContent = `Hiển thị ${filteredProducts.length} sản phẩm`;
+            
+            if (currentViewMode === 'grid') {
+                grid.className = 'grid grid-cols-2 md:grid-cols-3 gap-6';
+                grid.innerHTML = filteredProducts.map(product => `
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden group">
+                        <div class="h-48 bg-gradient-to-br ${getProductGradient(product.category)} flex items-center justify-center relative">
+                            <i class="${product.image} text-3xl text-gray-600"></i>
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                                <button onclick="quickView('${product.name}')" class="bg-white text-black px-3 py-2 rounded text-sm hover:bg-gray-100">
+                                    <i class="fas fa-eye mr-1"></i>Xem
+                                </button>
+                                <button onclick="addToCart('${product.name}')" class="bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800">
+                                    <i class="fas fa-cart-plus mr-1"></i>Thêm
+                                </button>
+                            </div>
+                            <button onclick="toggleWishlist('${product.name}')" class="absolute top-2 right-2 w-8 h-8 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                            </button>
+                            ${product.oldPrice > product.price ? '<span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">SALE</span>' : ''}
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 mb-2">${product.name}</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div>
+                                    <span class="text-red-500 font-bold">${formatPrice(product.price)}</span>
+                                    ${product.oldPrice > product.price ? `<span class="text-gray-400 line-through ml-2">${formatPrice(product.oldPrice)}</span>` : ''}
+                                </div>
+                                <div class="flex text-yellow-400">
+                                    ${generateStars(product.rating)}
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <span>${product.colors.length} màu</span>
+                                <span>${product.sizes.length} size</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                grid.className = 'space-y-4';
+                grid.innerHTML = filteredProducts.map(product => `
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden flex">
+                        <div class="w-32 h-32 bg-gradient-to-br ${getProductGradient(product.category)} flex items-center justify-center relative">
+                            <i class="${product.image} text-2xl text-gray-600"></i>
+                            ${product.oldPrice > product.price ? '<span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-1 py-0.5 rounded">SALE</span>' : ''}
+                        </div>
+                        <div class="flex-1 p-4">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-1">${product.name}</h3>
+                                    <div class="flex text-yellow-400 mb-2">
+                                        ${generateStars(product.rating)}
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 mb-2">
+                                        <span>${product.colors.length} màu</span>
+                                        <span>${product.sizes.length} size</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-red-500 font-bold">${formatPrice(product.price)}</span>
+                                        ${product.oldPrice > product.price ? `<span class="text-gray-400 line-through">${formatPrice(product.oldPrice)}</span>` : ''}
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button onclick="quickView('${product.name}')" class="bg-gray-100 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-200">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button onclick="addToCart('${product.name}')" class="bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function getProductGradient(category) {
+            const gradients = {
+                'nam': 'from-blue-100 to-indigo-200',
+                'nu': 'from-pink-100 to-rose-200',
+                'tre-em': 'from-yellow-100 to-orange-200',
+                'phu-kien': 'from-purple-100 to-pink-200'
+            };
+            return gradients[category] || 'from-gray-100 to-gray-200';
+        }
+        
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star text-sm"></i>';
+                } else {
+                    stars += '<i class="far fa-star text-sm"></i>';
+                }
+            }
+            return stars;
+        }
+        
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            
+            // Update button states
+            document.getElementById('gridView').classList.toggle('bg-gray-100', mode === 'grid');
+            document.getElementById('listView').classList.toggle('bg-gray-100', mode === 'list');
+            
+            renderProducts();
+        }
+        
+        function filterProducts() {
+            let filtered = [...allProducts];
+            
+            // Category filters
+            const categoryCheckboxes = document.querySelectorAll('#productsPage input[type="checkbox"]');
+            const selectedCategories = [];
+            categoryCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    const label = cb.nextElementSibling.textContent.toLowerCase();
+                    if (label.includes('nam')) selectedCategories.push('nam');
+                    else if (label.includes('nữ')) selectedCategories.push('nu');
+                    else if (label.includes('trẻ em')) selectedCategories.push('tre-em');
+                    else if (label.includes('phụ kiện')) selectedCategories.push('phu-kien');
+                }
+            });
+            
+            if (selectedCategories.length > 0) {
+                filtered = filtered.filter(product => selectedCategories.includes(product.category));
+            }
+            
+            // Price filters
+            const priceRadios = document.querySelectorAll('#productsPage input[name="price"]');
+            let selectedPriceRange = null;
+            priceRadios.forEach(radio => {
+                if (radio.checked) {
+                    const label = radio.nextElementSibling.textContent;
+                    if (label.includes('Dưới 500,000đ')) selectedPriceRange = 'under500k';
+                    else if (label.includes('500,000đ - 1,000,000đ')) selectedPriceRange = '500k-1m';
+                    else if (label.includes('Trên 1,000,000đ')) selectedPriceRange = 'over1m';
+                }
+            });
+            
+            if (selectedPriceRange) {
+                filtered = filtered.filter(product => {
+                    if (selectedPriceRange === 'under500k') return product.price < 500000;
+                    else if (selectedPriceRange === '500k-1m') return product.price >= 500000 && product.price <= 1000000;
+                    else if (selectedPriceRange === 'over1m') return product.price > 1000000;
+                    return true;
+                });
+            }
+            
+            filteredProducts = filtered;
+            renderProducts();
+            
+            // Show filter results notification
+            showNotification(`Tìm thấy ${filtered.length} sản phẩm phù hợp`);
+        }
+        
+        function sortProducts(sortBy) {
+            if (!sortBy) return;
+            
+            filteredProducts.sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-asc':
+                        return a.price - b.price;
+                    case 'price-desc':
+                        return b.price - a.price;
+                    case 'newest':
+                        return b.id - a.id; // Assuming higher ID = newer
+                    case 'bestseller':
+                        // Simulate bestseller logic (products with higher rating and lower price)
+                        return (b.rating * 1000 - b.price/1000) - (a.rating * 1000 - a.price/1000);
+                    case 'rating':
+                        return b.rating - a.rating;
+                    default:
+                        return 0;
+                }
+            });
+            
+            renderProducts();
+            showNotification(`Đã sắp xếp sản phẩm theo ${getSortLabel(sortBy)}`);
+        }
+        
+        function getSortLabel(sortBy) {
+            const labels = {
+                'price-asc': 'giá tăng dần',
+                'price-desc': 'giá giảm dần',
+                'newest': 'mới nhất',
+                'bestseller': 'bán chạy nhất',
+                'rating': 'đánh giá cao nhất'
+            };
+            return labels[sortBy] || '';
+        }
+        
+        let selectedSizes = [];
+        let selectedColors = [];
+        
+        function toggleSizeFilter(size) {
+            const button = event.target;
+            const index = selectedSizes.indexOf(size);
+            
+            if (index > -1) {
+                selectedSizes.splice(index, 1);
+                button.classList.remove('bg-black', 'text-white');
+                button.classList.add('border-gray-300');
+            } else {
+                selectedSizes.push(size);
+                button.classList.add('bg-black', 'text-white');
+                button.classList.remove('border-gray-300');
+            }
+            
+            applyAllFilters();
+        }
+        
+        function toggleColorFilter(color) {
+            const button = event.target;
+            const index = selectedColors.indexOf(color);
+            
+            if (index > -1) {
+                selectedColors.splice(index, 1);
+                button.classList.remove('border-black', 'border-gray-500');
+                button.classList.add('border-gray-300');
+            } else {
+                selectedColors.push(color);
+                if (color === 'black') {
+                    button.classList.add('border-gray-500');
+                } else {
+                    button.classList.add('border-black');
+                }
+                button.classList.remove('border-gray-300');
+            }
+            
+            applyAllFilters();
+        }
+        
+        function applyAllFilters() {
+            let filtered = [...allProducts];
+            
+            // Category filters
+            const categoryCheckboxes = document.querySelectorAll('#productsPage input[type="checkbox"]');
+            const selectedCategories = [];
+            categoryCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    const label = cb.nextElementSibling.textContent.toLowerCase();
+                    if (label.includes('nam')) selectedCategories.push('nam');
+                    else if (label.includes('nữ')) selectedCategories.push('nu');
+                    else if (label.includes('trẻ em')) selectedCategories.push('tre-em');
+                    else if (label.includes('phụ kiện')) selectedCategories.push('phu-kien');
+                }
+            });
+            
+            if (selectedCategories.length > 0) {
+                filtered = filtered.filter(product => selectedCategories.includes(product.category));
+            }
+            
+            // Price filters
+            const priceRadios = document.querySelectorAll('#productsPage input[name="price"]');
+            let selectedPriceRange = null;
+            priceRadios.forEach(radio => {
+                if (radio.checked) {
+                    const label = radio.nextElementSibling.textContent;
+                    if (label.includes('Dưới 500,000đ')) selectedPriceRange = 'under500k';
+                    else if (label.includes('500,000đ - 1,000,000đ')) selectedPriceRange = '500k-1m';
+                    else if (label.includes('Trên 1,000,000đ')) selectedPriceRange = 'over1m';
+                }
+            });
+            
+            if (selectedPriceRange) {
+                filtered = filtered.filter(product => {
+                    if (selectedPriceRange === 'under500k') return product.price < 500000;
+                    else if (selectedPriceRange === '500k-1m') return product.price >= 500000 && product.price <= 1000000;
+                    else if (selectedPriceRange === 'over1m') return product.price > 1000000;
+                    return true;
+                });
+            }
+            
+            // Size filters
+            if (selectedSizes.length > 0) {
+                filtered = filtered.filter(product => 
+                    selectedSizes.some(size => product.sizes.includes(size))
+                );
+            }
+            
+            // Color filters
+            if (selectedColors.length > 0) {
+                filtered = filtered.filter(product => 
+                    selectedColors.some(color => product.colors.includes(color))
+                );
+            }
+            
+            filteredProducts = filtered;
+            renderProducts();
+            
+            // Show filter results
+            const filterCount = selectedCategories.length + (selectedPriceRange ? 1 : 0) + selectedSizes.length + selectedColors.length;
+            if (filterCount > 0) {
+                showNotification(`Áp dụng ${filterCount} bộ lọc - Tìm thấy ${filtered.length} sản phẩm`);
+            }
+        }
+        
+        function filterProducts() {
+            applyAllFilters();
+        }
+        
+        function clearFilters() {
+            // Reset all filter inputs
+            document.querySelectorAll('#productsPage input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#productsPage input[type="radio"]').forEach(radio => radio.checked = false);
+            
+            // Reset size filters
+            selectedSizes = [];
+            document.querySelectorAll('.size-filter').forEach(btn => {
+                btn.classList.remove('bg-black', 'text-white');
+                btn.classList.add('border-gray-300');
+            });
+            
+            // Reset color filters
+            selectedColors = [];
+            document.querySelectorAll('.color-filter').forEach(btn => {
+                btn.classList.remove('border-black', 'border-gray-500');
+                btn.classList.add('border-gray-300');
+            });
+            
+            // Reset sort dropdown
+            document.querySelector('#productsPage select').value = '';
+            
+            // Reset products to show all
+            filteredProducts = [...allProducts];
+            renderProducts();
+            
+            showNotification('Đã xóa tất cả bộ lọc');
+        }
+        
+        // Initialize products page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial view mode
+            setViewMode('grid');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96e0ce13f46d03d7',t:'MTc1NTAxMDQzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
